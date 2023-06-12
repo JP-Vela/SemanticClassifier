@@ -6,6 +6,8 @@ import intentLoader as loader
 
 class IntentClassifier():
     def __init__(self, file_path = "./intents.json", save_folder = "./savedEmbeddings", refresh = False) -> None:
+        self.file_path = file_path
+
 
         chroma_client = chromadb.Client(Settings(
                 chroma_db_impl = "duckdb+parquet",
@@ -19,10 +21,15 @@ class IntentClassifier():
             loader.load_data(file_path)
             self.initialize_collection()
 
+    def update(self):
+        loader.load_data(self.file_path)
+        self.initialize_collection()
 
     def initialize_collection(self):
         grouped = loader.get_grouped() # [{tag: "", pattern: ""},...]
-        print(f"Initializing: {len(loader.get_classes())} classes")
+        file_classes = loader.get_classes()
+        
+        print(f"Initializing: {len(file_classes)} classes")
 
         docs = []
         metas = []
@@ -43,6 +50,12 @@ class IntentClassifier():
             metadatas=metas,
             ids=ids
         )
+
+        current = self.collection.get()
+        for i in range(len(current['ids'])):        
+            if current['metadatas'][i]['className'] not in file_classes:
+                self.collection.delete(current['ids'][i])
+
 
 
     def classify(self,query):
