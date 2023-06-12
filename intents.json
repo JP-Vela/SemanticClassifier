@@ -1,0 +1,49 @@
+{"intents": [
+  
+    {
+        "tag": "time",
+        "patterns": ["what time is it", "what the time", "what hour is it", "you got the time", "tell me the time"]
+    },
+
+    {
+        "tag": "on",
+        "patterns": ["turn on the lamp", "could you turn on the lamp", "it's dark in here", "turn the lamp on", "turn on my lamp", "lamp on"]
+    },
+
+    {
+        "tag": "off",
+        "patterns": ["turn off the lamp", "could you turn off the lamp", "turn the lamp off", "turn off my lamp", "lamp off"]
+    },
+
+    {
+        "tag": "lightsoff",
+        "patterns": ["turn off the lights", "could you turn off the lights", "turn the lights off", "lights out", "lights off"]
+    },
+
+    {
+        "tag": "lightson",
+        "patterns": ["turn on the lights", "could you turn on the lights", "turn the lights on", "lights on"]
+    },
+    
+    {
+        "tag": "camon",
+        "patterns": ["open the camera", "open the feed", "turn on the camera", "show me the stream", "stream my security camera", "stream my camera", "stream the camera", "show me the stream", "show me the video feed", "show me the video stream", "turn on the video feed", "turn on the camera feed", "pull up the video feed", "pull up the camera stream"]
+    },
+
+    {
+        "tag": "camoff",
+        "patterns": ["turn off the camera", "remove the video stream", "close the feed", "close my security camera", "close my camera", "close the camera", "close the stream", "close the video feed", "close the video stream", "turn off the video feed", "turn off the camera feed"]
+    },
+
+    {
+        "tag": "date",
+        "patterns": ["what is the date", "whats the date", "give me the date", "what the date today", "I need the date", "whats the day"]
+    },
+
+    {
+        "tag": "greeting",
+        "patterns": ["hey what's up", "hi how are you", "hello there"]
+    }
+    ]
+
+}
