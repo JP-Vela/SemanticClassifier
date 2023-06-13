@@ -101,14 +101,7 @@
             "patterns": [
                 "hey what's up",
                 "hi how are you",
-                "hello there",
-                "good to see you"
-            ]
-        },
-        {
-            "tag": "goodbye",
-            "patterns": [
-                "see you later"
+                "hello there"
             ]
         }
     ]
