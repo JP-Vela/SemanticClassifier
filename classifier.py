@@ -2,7 +2,7 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 import intentLoader as loader
-
+import json
 
 class IntentClassifier():
     def __init__(self, file_path = "./intents.json", save_folder = "./savedEmbeddings", refresh = False) -> None:
@@ -18,14 +18,13 @@ class IntentClassifier():
         self.collection = chroma_client.get_or_create_collection(name="intents", embedding_function=sentence_transformer_ef)
 
         if refresh:
-            loader.load_data(file_path)
             self.initialize_collection()
 
     def update(self):
-        loader.load_data(self.file_path)
         self.initialize_collection()
 
     def initialize_collection(self):
+        loader.load_data(self.file_path)
         grouped = loader.get_grouped() # [{tag: "", pattern: ""},...]
         file_classes = loader.get_classes()
         
@@ -68,3 +67,27 @@ class IntentClassifier():
         class_name = results['metadatas'][0][0]['className']
         distance = results['distances'][0][0]
         return distance, class_name
+    
+
+class IntentEditor():
+    def __init__(self, file_path = "./intents.json") -> None:
+        self.file_path = file_path
+        self.full_data = loader.load_data(self.file_path)
+
+
+    def add_or_update(self, class_name, pattern):
+
+        intents = self.full_data['intents']
+
+        for i in range(len(intents)):
+            if intents[i]['tag'] == class_name:
+                self.full_data['intents'][i]['patterns'].append(pattern)
+
+                with open('intents.json', 'w') as fp:
+                    json.dump(self.full_data, indent=4, separators=(',', ': '), sort_keys=False, fp=fp)
+                return
+            
+        new_obj = {'tag':class_name, 'patterns':[pattern]}
+        self.full_data['intents'].append(new_obj)
+        with open('intents.json', 'w') as fp:
+            json.dump(self.full_data, indent=4, separators=(',', ': '), sort_keys=False, fp=fp)
